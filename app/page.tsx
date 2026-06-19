@@ -23,7 +23,7 @@ export default function HomePage() {
         <div style={{ position: 'absolute', top: '-10%', left: '-5%', width: '40%', height: '60%', background: 'var(--bg-pink)', borderRadius: '50%', filter: 'blur(80px)', opacity: 0.6, zIndex: 0 }} />
         <div style={{ position: 'absolute', bottom: '-10%', right: '-5%', width: '30%', height: '50%', background: 'var(--bg-blue)', borderRadius: '50%', filter: 'blur(80px)', opacity: 0.6, zIndex: 0 }} />
 
-        <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 2, display: 'flex', flexWrap: 'wrap', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 20, display: 'flex', flexWrap: 'wrap', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
           
           {/* Left Column (Text) */}
           <div style={{ flex: '1 1 500px' }}>
