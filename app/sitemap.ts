@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next';
 import postsData from '@/data/posts.json';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://skindevicecost.com';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://skinacademy.kr';
   const now = new Date().toISOString();
 
   const staticPages: MetadataRoute.Sitemap = [
