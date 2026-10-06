@@ -16,9 +16,9 @@ const EMPTY_FORM = {
   region: '',
 }
 
-/** 입력칸 공통 pill 스타일 (본문 폼과 동일한 토큰: stone-100 배경 / stone-800 텍스트) */
+/** 입력칸 공통 pill 스타일 — 흰 배경 + 옅은 회색 테두리(사이트 기존 토큰: border-black/10, globals.css 의 .pill 과 동일 톤) */
 const PILL =
-  'flex min-w-0 items-center bg-stone-100 rounded-full px-3.5 py-2 shadow-sm transition-shadow focus-within:ring-2 focus-within:ring-stone-400/50'
+  'flex min-w-0 items-center bg-white border border-black/10 rounded-full px-3.5 py-2 shadow-sm transition-shadow focus-within:ring-2 focus-within:ring-stone-400/50 focus-within:border-stone-300'
 const FIELD =
   'w-full min-w-0 bg-transparent text-[13px] font-medium text-stone-800 placeholder-stone-400 focus:outline-none lg:text-[14px]'
 
@@ -146,10 +146,10 @@ export default function BottomForm() {
         />
         <label
           htmlFor={id}
-          className={`flex h-[34px] w-[34px] cursor-pointer items-center justify-center rounded-full text-[13px] font-bold transition-all ${
+          className={`flex h-8 min-w-[40px] cursor-pointer items-center justify-center rounded-full px-3 text-[13px] font-bold transition-all ${
             on
-              ? 'bg-stone-800 text-white shadow-md shadow-stone-800/30'
-              : 'bg-stone-100 text-stone-400 hover:bg-stone-200'
+              ? 'bg-stone-900 text-white shadow-md shadow-stone-900/30'
+              : 'bg-transparent text-stone-400 hover:text-stone-600'
           }`}
         >
           {text}
@@ -169,12 +169,12 @@ export default function BottomForm() {
 
       <div
         ref={barRef}
-        className="fixed bottom-0 left-0 right-0 z-[100] border-t border-black/10 bg-white/95 px-3 py-2.5 backdrop-blur-md shadow-[0_-4px_20px_rgba(0,0,0,0.07)]"
+        className="fixed bottom-0 left-0 right-0 z-[100] border-t border-black/10 bg-white/95 px-3 py-2 backdrop-blur-md shadow-[0_-4px_20px_rgba(0,0,0,0.07)]"
         style={{ paddingBottom: 'calc(0.625rem + env(safe-area-inset-bottom, 0px))' }}
       >
         <form
           onSubmit={handleSubmit}
-          className="mx-auto grid w-full max-w-[1180px] grid-cols-2 gap-1.5 md:grid-cols-4 md:gap-2 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,0.85fr)_minmax(0,0.85fr)_minmax(0,1.45fr)_auto] lg:items-center"
+          className="mx-auto grid w-full max-w-[1180px] grid-cols-2 gap-1 md:grid-cols-4 md:gap-1.5 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,0.85fr)_minmax(0,0.85fr)_minmax(0,1.45fr)_auto] lg:items-center lg:gap-2"
         >
           {/* 1. 이름 (필수) */}
           <div className={PILL}>
@@ -190,8 +190,8 @@ export default function BottomForm() {
             />
           </div>
 
-          {/* 2. 성별 (필수) */}
-          <fieldset className="flex min-w-0 items-center justify-center gap-1.5">
+          {/* 2. 성별 (필수) — 붙어 있는 pill 버튼 2개 */}
+          <fieldset className="flex min-w-0 items-center justify-center gap-0.5 rounded-full border border-black/10 bg-white shadow-sm">
             <legend className="sr-only">성별</legend>
             {sexButton('1', '남', 'bf-sex-male')}
             {sexButton('2', '여', 'bf-sex-female')}
@@ -232,7 +232,7 @@ export default function BottomForm() {
           </div>
 
           {/* 5. 휴대폰 번호 (필수) */}
-          <div className="col-span-2 flex min-w-0 gap-1.5 md:col-span-2 lg:col-span-1">
+          <div className="col-span-2 flex min-w-0 gap-1 md:col-span-2 lg:col-span-1">
             <div className={`${PILL} relative w-[78px] shrink-0 pr-7 lg:w-[84px]`}>
               <label htmlFor="bf-mobile1" className="sr-only">통신 번호 앞자리</label>
               <select
@@ -262,28 +262,25 @@ export default function BottomForm() {
             </div>
           </div>
 
-          {/* 6. 동의 (필수) — 상세 내용은 기존 개인정보 동의 모달로 연결 */}
-          <div className="col-span-2 flex items-center gap-1.5 md:col-span-2 lg:col-span-6 lg:col-start-1 lg:row-start-2 lg:justify-center">
-            <label htmlFor="bf-agree" className="flex cursor-pointer items-center gap-1.5">
+          {/* 6. 동의 (필수) — 체크박스/짧은 라벨 클릭 시 기존 PrivacyModal 로 상세 내용 노출 */}
+          <div className="col-span-2 flex items-center justify-center md:col-span-2 lg:col-span-6 lg:col-start-1 lg:row-start-2">
+            <label
+              htmlFor="bf-agree"
+              onClick={() => setShowModal(true)}
+              className="flex cursor-pointer items-center gap-1.5"
+            >
               <input
                 id="bf-agree"
                 type="checkbox"
                 checked={agree}
                 onChange={(e) => setAgree(e.target.checked)}
                 className="h-4 w-4 shrink-0 accent-stone-900"
-                aria-label="개인정보 수집 및 이용 동의, 개인정보 제3자 제공 동의 (필수)"
+                aria-label="개인정보 수집 및 이용 동의, 개인정보 제3자 제공 동의 (필수) — 클릭 시 상세 내용 보기"
               />
-              <span className="text-[11px] font-medium leading-tight text-stone-600 sm:text-[12px]">
-                <span className="font-bold text-stone-900">[필수]</span> 개인정보 수집·이용 및 제3자 제공 동의
+              <span className="text-[11px] font-medium leading-tight text-stone-600 underline underline-offset-2 sm:text-[12px]">
+                <span className="font-bold text-stone-900">[필수]</span> 개인정보 동의
               </span>
             </label>
-            <button
-              type="button"
-              onClick={() => setShowModal(true)}
-              className="shrink-0 text-[11px] font-bold text-stone-500 underline underline-offset-2 hover:text-stone-900 sm:text-[12px]"
-            >
-              상세
-            </button>
           </div>
 
           {/* 7. 전송 */}
