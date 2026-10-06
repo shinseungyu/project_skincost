@@ -2,7 +2,8 @@
 
 import { useState } from "react"
 import PrivacyModal from "./PrivacyModal"
-import { validateForm, parsePhone } from "@/lib/validate"
+import { validateForm, parsePhone, SPECIAL_CHAR_REG } from "@/lib/validate"
+import { MOBILE_PREFIXES, REGIONS, SUBMIT_CATEGORY, SUBMIT_PURPOSE } from "@/lib/formOptions"
 
 export default function FormSection() {
   const [form, setForm] = useState({
@@ -19,7 +20,6 @@ export default function FormSection() {
   const set = (key: string, value: string) =>
     setForm((p) => ({ ...p, [key]: value }))
 
-  const SPECIAL_CHAR_REG = /[ \{\}\[\]\/.,;:|\)*~`^\-_+┼<>\%\'\"\\\(\=]/i
   const handleNameChange = (value: string) => {
     if (SPECIAL_CHAR_REG.test(value)) {
       alert("특수문자는 입력하실수 없습니다.")
@@ -47,8 +47,8 @@ export default function FormSection() {
       mobile3: "",
       customer_sex: form.customer_sex,
       region: form.region,
-      category: "skinbeauty",
-      purpose: "피부미용학원",
+      category: SUBMIT_CATEGORY,
+      purpose: SUBMIT_PURPOSE,
     }
 
     setSubmitted(true)
@@ -133,7 +133,7 @@ export default function FormSection() {
               onChange={(e) => set("mobile1", e.target.value)}
               className="w-full bg-transparent text-[15px] font-medium text-stone-800 appearance-none focus:outline-none"
             >
-              {["010","011","016","017","019"].map((v) => (
+              {MOBILE_PREFIXES.map((v) => (
                 <option key={v} value={v}>{v}</option>
               ))}
             </select>
@@ -159,7 +159,7 @@ export default function FormSection() {
             className={`w-full bg-transparent text-[15px] font-medium appearance-none focus:outline-none ${form.region ? "text-stone-800" : "text-stone-400"}`}
           >
             <option value="" disabled hidden>거주 지역 선택</option>
-            {["서울","부산","대구","인천","광주","대전","울산","세종","경기","강원","충북","충남","전북","전남","경북","경남","제주"].map((r) => (
+            {REGIONS.map((r) => (
               <option key={r} value={r}>{r}</option>
             ))}
           </select>

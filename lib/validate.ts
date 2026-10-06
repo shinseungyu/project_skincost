@@ -13,7 +13,7 @@ export type ParsedPhone = {
   mobile2: string
 }
 
-const SPECIAL_CHAR_REG = /[ \{\}\[\]\/.,;:|\)*~`^\-_+┼<>\%\'\"\\\(\=]/i
+export const SPECIAL_CHAR_REG = /[ \{\}\[\]\/.,;:|\)*~`^\-_+┼<>\%\'\"\\\(\=]/i
 
 export function validateForm(data: FormData): string | null {
   if (!data.customer_name) return '이름을 입력해 주세요.'
