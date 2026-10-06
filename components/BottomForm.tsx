@@ -111,9 +111,16 @@ export default function BottomForm() {
     e.preventDefault()
     if (sending) return
 
-    const result = resolve(agree)
+    // 동의 여부와 무관한 나머지 입력부터 검증한다(privacy:true 로 넘겨 그 검사만 건너뛴다).
+    const result = resolve(true)
     if (typeof result === 'string') {
       setStatus({ kind: 'error', msg: result })
+      return
+    }
+    if (!agree) {
+      // 본문 폼·나머지 바텀폼과 같은 흐름 — 동의가 안 돼 있으면 안내만 하지 않고 모달을 바로 연다.
+      setStatus({ kind: 'error', msg: '개인정보수집 및 활용에 동의해 주세요.' })
+      setShowModal(true)
       return
     }
     void send(result)
