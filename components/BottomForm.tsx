@@ -126,7 +126,7 @@ export default function BottomForm() {
     void send(result)
   }
 
-  // 모달에서 동의하면 체크박스를 켜고 그대로 전송한다(본문 폼과 동일한 흐름)
+  // 모달에서 동의하면 동의 상태로 바꾸고 그대로 전송한다(본문 폼과 동일한 흐름)
   const handleModalConfirm = async () => {
     setAgree(true)
     if (sending) return
@@ -269,28 +269,7 @@ export default function BottomForm() {
             </div>
           </div>
 
-          {/* 6. 동의 (필수) — 체크박스/짧은 라벨 클릭 시 기존 PrivacyModal 로 상세 내용 노출 */}
-          <div className="col-span-2 flex items-center justify-center md:col-span-2 lg:col-span-6 lg:col-start-1 lg:row-start-2">
-            <label
-              htmlFor="bf-agree"
-              onClick={() => setShowModal(true)}
-              className="flex cursor-pointer items-center gap-1.5"
-            >
-              <input
-                id="bf-agree"
-                type="checkbox"
-                checked={agree}
-                onChange={(e) => setAgree(e.target.checked)}
-                className="h-4 w-4 shrink-0 accent-stone-900"
-                aria-label="개인정보 수집 및 이용 동의, 개인정보 제3자 제공 동의 (필수) — 클릭 시 상세 내용 보기"
-              />
-              <span className="text-[11px] font-medium leading-tight text-stone-600 underline underline-offset-2 sm:text-[12px]">
-                <span className="font-bold text-stone-900">[필수]</span> 개인정보 동의
-              </span>
-            </label>
-          </div>
-
-          {/* 7. 전송 */}
+          {/* 6. 전송 — 동의는 여기서 누르면 기존 PrivacyModal 이 뜬다 */}
           <button
             type="submit"
             disabled={sending}
