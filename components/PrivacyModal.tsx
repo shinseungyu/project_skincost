@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { THIRD_PARTY_RECIPIENT } from "@/lib/legal"
 
 type Props = {
   onConfirm: () => void
@@ -73,7 +74,7 @@ export default function PrivacyModal({ onConfirm, onClose }: Props) {
               </ContentBox>
 
               <ContentBox checked={thirdAgree} onChange={setThirdAgree} label="개인정보 제3자 제공 동의" primary={primary}>
-                제공받는 자 : 담당 상담사 (컨설턴트)<br />
+                제공받는 자 : {THIRD_PARTY_RECIPIENT}<br />
                 제공 목적 : 원활한 1:1 유선 상담 진행<br />
                 제공 항목 : 성명, 휴대폰 번호, 생년월일, 성별, 거주 지역, 관심 과정<br />
                 보유 기간 : 상담 목적 달성 시 즉시 파기<br />

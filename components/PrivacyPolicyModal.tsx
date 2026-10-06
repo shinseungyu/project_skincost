@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { THIRD_PARTY_RECIPIENT } from "@/lib/legal"
 
 export default function PrivacyPolicyModal() {
   const [open, setOpen] = useState(false)
@@ -47,7 +48,7 @@ export default function PrivacyPolicyModal() {
               </Section>
 
               <Section title="제4조 (개인정보의 제3자 제공)">
-                <b>제공받는 자:</b> 피부미용학원 전문 상담사<br />
+                <b>제공받는 자:</b> {THIRD_PARTY_RECIPIENT}<br />
                 <b>제공 목적:</b> 피부미용학원 사용료 상세 상담 및 관련 정보 안내<br />
                 <b>제공 항목:</b> 수집된 개인정보 일체<br />
                 <b>보유 및 이용기간:</b> 제공받는 자의 목적 달성 시까지
