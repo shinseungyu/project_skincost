@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { THIRD_PARTY_RECIPIENT } from "@/lib/legal"
+import { DATA_CONTROLLER, THIRD_PARTY_RECIPIENT } from "@/lib/legal"
 
 type Props = {
   onConfirm: () => void
@@ -66,7 +66,7 @@ export default function PrivacyModal({ onConfirm, onClose }: Props) {
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
               <ContentBox checked={priAgree} onChange={setPriAgree} label="개인정보 수집 및 이용 동의" primary={primary}>
-                수집 주체 : (주)와야미디어<br />
+                수집 주체 : {DATA_CONTROLLER}<br />
                 수집 목적 : 피부미용학원 수강료 관련 상담 및 문의 응대<br />
                 수집 항목 : 성명, 휴대폰 번호, 생년월일, 성별, 거주 지역, 관심 과정<br />
                 보유 기간 : 수집일로부터 1년 (또는 요청 시 즉시 파기)<br />

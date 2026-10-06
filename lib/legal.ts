@@ -3,3 +3,10 @@
  * 제3자 제공받는 자는 반드시 이 상수 한 곳에서만 관리한다.
  */
 export const THIRD_PARTY_RECIPIENT = '올댓뷰티 상담사'
+
+/**
+ * 개인정보 수집 주체(개인정보를 수집·이용하는 자 = 운영사).
+ * 제3자 제공받는 자(THIRD_PARTY_RECIPIENT)와는 별개 항목이므로 섞지 않는다.
+ * 동의 모달 / 개인정보처리방침 / 필수안내사항은 반드시 이 상수를 참조한다.
+ */
+export const DATA_CONTROLLER = '주식회사 와야미디어'
