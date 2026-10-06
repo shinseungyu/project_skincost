@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import PrivacyModal from './PrivacyModal'
-import { parsePhone } from '@/lib/validate'
+import { parsePhone, type ParsedPhone } from '@/lib/validate'
 
 type Status = { kind: 'idle' | 'sending' | 'done' | 'error'; msg: string }
 
@@ -14,24 +14,12 @@ export default function BottomForm() {
 
   const sending = status.kind === 'sending'
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (sending) return
+  const resolvePhone = (): ParsedPhone | string => {
+    if (!phone) return '휴대폰 번호를 입력해 주세요.'
+    return parsePhone('010', phone)
+  }
 
-    if (!phone) {
-      setStatus({ kind: 'error', msg: '휴대폰 번호를 입력해 주세요.' })
-      return
-    }
-    const phoneResult = parsePhone('010', phone)
-    if (typeof phoneResult === 'string') {
-      setStatus({ kind: 'error', msg: phoneResult })
-      return
-    }
-    if (!agree) {
-      setStatus({ kind: 'error', msg: '개인정보 수집·이용 및 제3자 제공에 동의해 주세요.' })
-      return
-    }
-
+  const send = async (phoneResult: ParsedPhone) => {
     // FormSection.tsx 와 완전히 동일한 엔드포인트·필드·환경변수 (번호 외 항목은 빈 값)
     const payload = {
       customer_name: '',
@@ -67,11 +55,39 @@ export default function BottomForm() {
     }
   }
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (sending) return
+
+    const phoneResult = resolvePhone()
+    if (typeof phoneResult === 'string') {
+      setStatus({ kind: 'error', msg: phoneResult })
+      return
+    }
+    if (!agree) {
+      setStatus({ kind: 'error', msg: '개인정보 수집·이용 및 제3자 제공에 동의해 주세요.' })
+      return
+    }
+    void send(phoneResult)
+  }
+
+  // 모달에서 동의하면 체크박스를 켜고 그대로 전송한다(본문 폼과 동일한 흐름)
+  const handleModalConfirm = async () => {
+    setAgree(true)
+    if (sending) return
+    const phoneResult = resolvePhone()
+    if (typeof phoneResult === 'string') {
+      setStatus({ kind: 'error', msg: phoneResult })
+      return
+    }
+    await send(phoneResult)
+  }
+
   return (
     <>
       {showModal && (
         <PrivacyModal
-          onConfirm={() => setAgree(true)}
+          onConfirm={handleModalConfirm}
           onClose={() => setShowModal(false)}
         />
       )}

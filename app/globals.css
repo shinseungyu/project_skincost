@@ -23,8 +23,9 @@
 body {
   background: var(--bg-main);
   color: var(--text-primary);
-  /* 화면 하단 고정 바텀폼(BottomForm) 높이만큼 여백 — 본문 마지막 내용 가림 방지 */
-  padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+  /* 화면 하단 고정 바텀폼(BottomForm) 높이만큼 여백 — 본문 마지막 내용 가림 방지
+     (안내 문구가 뜨면 바가 20px 높아지므로 그만큼 더 확보한다: 바 63px → 83px) */
+  padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px));
   font-family: var(--font-geist), 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
@@ -84,9 +85,9 @@ a { color: inherit; text-decoration: none; transition: all 0.2s ease; }
   border: 1px solid var(--border-color);
 }
 
-/* 바텀폼이 2줄로 접히는 폭에서는 여백도 늘린다 */
+/* 바텀폼이 2줄로 접히는 폭에서는 여백도 늘린다 (바 89px → 안내 문구 포함 109px) */
 @media (max-width: 639px) {
-  body { padding-bottom: calc(90px + env(safe-area-inset-bottom, 0px)); }
+  body { padding-bottom: calc(128px + env(safe-area-inset-bottom, 0px)); }
 }
 
 @media (max-width: 768px) {
